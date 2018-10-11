@@ -1,0 +1,97 @@
+7+(6*5^2+3-4/2)
+7+(67(56*2))
+8*+7
+(8*5/8)-(3/1)-5
+
+7+(6*5^2+3-4/2) is Valid Expression
+7+(67(56*2)) is Invalid Expression
+8*+7 is Invalid Expression
+(8*5/8)-(3/1)-5 is Valid Expression
+
+
+7+(6*5^2+3-4/2
+7+(67(56*2))
+8*+7
+(8*5/8)-(3/1)-5)
+7+(6*5^2+3-4/2))
+7+(67(56*2))
+(8)+7-
+((8*5/8)-(3/1)-5
+
+7+(6*5^2+3-4/2 is Invalid Expression
+7+(67(56*2)) is Invalid Expression
+8*+7 is Invalid Expression
+(8*5/8)-(3/1)-5) is Invalid Expression
+7+(6*5^2+3-4/2)) is Invalid Expression
+7+(67(56*2)) is Invalid Expression
+(8)+7- is Valid Expression
+((8*5/8)-(3/1)-5 is Invalid Expression
+
+
+7+(6*5^2+3-4/2
+7+(67(56*2))
+8*+7
+(8*5/8)-(3/1)-5)
+7+(6*5^2+3-4/2))
+7+67+(56*2))
+(8)+7-
+((8*5/8)-(3/1)-5
+
+7+(6*5^2+3-4/2 is Invalid Expression
+7+(67(56*2)) is Invalid Expression
+8*+7 is Invalid Expression
+(8*5/8)-(3/1)-5) is Invalid Expression
+7+(6*5^2+3-4/2)) is Invalid Expression
+7+67+(56*2)) is Invalid Expression
+(8)+7- is Invalid Expression
+((8*5/8)-(3/1)-5 is Invalid Expression
+
+
+7+6*5^2+3-4/2
+7+(67(56*2))
+8*+7
+(8*5/8)-(3/1)-5)
+7+(6*5^2+3-4/2))
+7+67+(56*2))
+(8)+7
+((8*5/8)-(3/1)-5
+
+7+6*5^2+3-4/2 is Valid Expression
+7+(67(56*2)) is Invalid Expression
+8*+7 is Invalid Expression
+(8*5/8)-(3/1)-5) is Invalid Expression
+7+(6*5^2+3-4/2)) is Invalid Expression
+7+67+(56*2)) is Invalid Expression
+(8)+7 is Valid Expression
+((8*5/8)-(3/1)-5 is Invalid Expression
+
+
+7+6*5^2+3-4^4
+7+6*5^2+3-4/2
+7+6*5^2+3-4*4
+7+6*5^2+3-4+4
+7+6*5^2+3-4-4
+
+7+(67(56*2))
+8*+7
+(8*5/8)-(3/1)-5)
+7+(6*5^2+3-4/2))
+7+67+(56*2))
+(8)+7
+((8*5/8)-(3/1)-5
+(8^4+(9/2)-(6^2)*5^3)
+
+(8^3+9^2-6^2*5^3)
+
+((8^3)+(9^2)-(6^2)*(5^3))
+((8^3)-(9^2)-(6^2)+(5^3))
+
+
+((8/3)/(9/2)/(6/2)/(5/3))
+((8*3)*(9*2)*(6*2)*(5*3))
+
+((512.0)-(81.0)-161.0)
+((512.0)+(81.0)+161.0)
+
+
+
