@@ -13,7 +13,7 @@ This project currently handles most of the scenarios but still some improvements
 Many more test cases will be tested and code will be updated over the course of time, taking in account more of scientific calculation operands. 
 
 Currently the operands which are taken into consideration are 
-'(', ')', '*', '/', '+', '-', '^'
+'('  ,   ')'  ,   '*'   ,    '/'   ,    '+'   ,     '-'    ,    '^'
 
 The numerical value can be an integer in between the range 0-9. 
 
