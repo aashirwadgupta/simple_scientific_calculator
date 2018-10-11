@@ -25,16 +25,16 @@ public class PowerCalculationEngineServiceImpl extends CalculationEngineService 
 	 *         on which exponent/power was performed.
 	 */
 	public String calculateOperandExpression(String expression, int lengthOfExpression, int positionOfPow) {
-		System.out.println("Expression within power is "+expression);
+		//System.out.println("Expression within power is "+expression);
 		double startNum = 0;
 		double endNum = 0;
 		int startChip = 0, endChip = 0;
 		for(int start = positionOfPow-1;start>=0;start--){
 			char startChar = expression.charAt(start);
 			if(!(start==0 && startChar=='(')) {
-				if(NUMERICAL_CHAR_LIST.contains(startChar) || startChar == '(' || startChar == ')'){
+				if(NUMERICAL_CHAR_LIST.contains(startChar) || (startChar == '(' || startChar == ')')){
 					if(start==0) {
-						System.out.println(start);
+						//System.out.println(start);
 						String extractedString = expression.substring(start, positionOfPow);
 						extractedString = extractedString.replaceFirst("(", "").replaceFirst(")", "");
 						startNum = Double.parseDouble(extractedString);
@@ -51,27 +51,29 @@ public class PowerCalculationEngineServiceImpl extends CalculationEngineService 
 							}
 						}
 						String extractedPartialExpression = expression.substring(cascadeSplitIndex, positionOfPow);
-						System.out.println("printing extractedPartialExpression");
-						System.out.println(extractedPartialExpression);
+						//System.out.println("printing extractedPartialExpression");
+						//System.out.println(extractedPartialExpression);
 						String resultExpression = invokeCalculationEngine(extractedPartialExpression);
-						System.out.println("printing resultExpression");
-						System.out.println(resultExpression);
+						//System.out.println("printing resultExpression");
+						//System.out.println(resultExpression);
 						expression = expression.replace(extractedPartialExpression, resultExpression);
-						System.out.println("printing finalExpression");
-						System.out.println(expression);
+						//System.out.println("printing finalExpression");
+						//System.out.println(expression);
 						//expression = invokeCalculationEngine(expression);
 						return expression;
 						
 					}
 				} else {
 					String extractedString = expression.substring(start+1, positionOfPow);
-					System.out.println("extracted String "+extractedString);
+					//System.out.println("extracted String "+extractedString);
 					if(extractedString.indexOf('(')!=-1) {
-						extractedString = StringUtils.replaceOnce(extractedString, "(", "");
+						//extractedString = StringUtils.replaceOnce(extractedString, "(", "");
+						extractedString = StringUtils.replace(extractedString, "(", "");
 						//extractedString = extractedString.replaceFirst("(", "");
 					} 
 					if (extractedString.indexOf(')')!=-1) {
-						extractedString = StringUtils.replaceOnce(extractedString, ")", "");
+						//extractedString = StringUtils.replaceOnce(extractedString, ")", "");
+						extractedString = StringUtils.replace(extractedString, ")", "");
 						//extractedString = extractedString.replaceFirst(")", "");
 					}
 					//extractedString = extractedString.replaceFirst("(", "").replaceFirst(")", "");
@@ -80,7 +82,7 @@ public class PowerCalculationEngineServiceImpl extends CalculationEngineService 
 					break;
 				}
 			} else {
-				System.out.println(start);
+				//System.out.println(start);
 				String extractedString = expression.substring(start, positionOfPow);
 				extractedString = extractedString.replaceFirst("(", "").replaceFirst(")", "");
 				startNum = Double.parseDouble(extractedString);
@@ -103,13 +105,15 @@ public class PowerCalculationEngineServiceImpl extends CalculationEngineService 
 				} else {
 					String extractedString = expression.substring(positionOfPow+1, end);
 					//String extractedString = expression.substring(start+1, positionOfPow);
-					System.out.println("extracted String "+extractedString);
+					//System.out.println("extracted String "+extractedString);
 					if(extractedString.indexOf('(')!=-1) {
-						extractedString = StringUtils.replaceOnce(extractedString, "(", "");
+						//extractedString = StringUtils.replaceOnce(extractedString, "(", "");
+						extractedString = StringUtils.replace(extractedString, "(", "");
 						//extractedString = extractedString.replaceFirst("(", "");
 					} 
 					if (extractedString.indexOf(')')!=-1) {
-						extractedString = StringUtils.replaceOnce(extractedString, ")", "");
+						//extractedString = StringUtils.replaceOnce(extractedString, ")", "");
+						extractedString = StringUtils.replace(extractedString, ")", "");
 						//extractedString = extractedString.replaceFirst(")", "");
 					}
 					//extractedString = extractedString.replaceFirst("(", "").replaceFirst(")", "");

@@ -13,7 +13,8 @@ import com.scientific.string.calculator.service.impl.SubtractionCalculationEngin
 public class CalculationEngineService {
 
 	public static final List<Character> OPERAND_CHAR_LIST = Arrays.asList('+', '-', '/', '*', '^');
-	public static final List<Character> NUMERICAL_CHAR_LIST = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.');
+	public static final List<Character> NUMERICAL_CHAR_LIST = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8',
+			'9', '.');
 
 	/**
 	 * Engine Function to perform operation on an Expression. BODMAS rule is
@@ -24,7 +25,8 @@ public class CalculationEngineService {
 	 *            The expression on which the operand execution is to be
 	 *            performed
 	 * @param lengthOfExpression
-	 *            length of the provided expression
+	 *            length of the provided expression as it changes after each
+	 *            operand's operation
 	 * @param positionOfOperand
 	 *            first position of the operand.
 	 * @return the output expression post the calculation being done, replacing
@@ -53,7 +55,7 @@ public class CalculationEngineService {
 	public String invokeCalculationEngine(String expression) {
 
 		int lengthOfExpression = expression.length();
-		System.out.println("supplied expression is " + expression);
+		//System.out.println("supplied expression is " + expression);
 		// int position = 0;
 		int positionOfPow = 0;
 		int positionOfAdd = 0;
@@ -83,7 +85,7 @@ public class CalculationEngineService {
 				// lengthOfExpression, positionOfPow);
 				outputExpression = exponentEngine.calculateOperandExpression(expression, lengthOfExpression,
 						positionOfPow);
-				System.out.println(outputExpression);
+				//System.out.println(outputExpression);
 				positionOfPow = outputExpression.indexOf('^');
 				/*
 				 * if(positionOfPow!=-1){ lengthOfExpression =
@@ -98,7 +100,7 @@ public class CalculationEngineService {
 				// lengthOfExpression, positionOfDivide);
 				outputExpression = divisionEngine.calculateOperandExpression(expression, lengthOfExpression,
 						positionOfDivide);
-				System.out.println(outputExpression);
+				//System.out.println(outputExpression);
 			} else if (!(positionOfMultiply == -1 || positionOfMultiply == 0)) {
 				MultiplicationCalculationEngineServiceImpl multiplicationEngine = new MultiplicationCalculationEngineServiceImpl();
 				/*
@@ -107,31 +109,30 @@ public class CalculationEngineService {
 				 */
 				outputExpression = multiplicationEngine.calculateOperandExpression(expression, lengthOfExpression,
 						positionOfMultiply);
-				System.out.println(outputExpression);
+				//System.out.println(outputExpression);
 			} else if (!(positionOfAdd == -1 || positionOfAdd == 0)) {
 				AdditionCalculationEngineServiceImpl additionEngine = new AdditionCalculationEngineServiceImpl();
 				// outputExpression = calculateAddition(expression,
 				// lengthOfExpression, positionOfAdd);
 				outputExpression = additionEngine.calculateOperandExpression(expression, lengthOfExpression,
 						positionOfAdd);
-				System.out.println(outputExpression);
+				//System.out.println(outputExpression);
 			} else if (!(positionOfSubtract == -1 || positionOfSubtract == 0)) {
 				SubtractionCalculationEngineServiceImpl subtractionEngine = new SubtractionCalculationEngineServiceImpl();
 				// outputExpression = calculateSubtraction(expression,
 				// lengthOfExpression, positionOfSubtract);
 				outputExpression = subtractionEngine.calculateOperandExpression(expression, lengthOfExpression,
 						positionOfSubtract);
-				System.out.println(outputExpression);
+				//System.out.println(outputExpression);
 			} else {
 				outputExpression = expression;
 				s = lengthOfExpression - 1;
 				break;
 			}
-			System.out.println("Expression is " + expression + " with length as " + lengthOfExpression);
+			//System.out.println("Expression is " + expression + " with length as " + lengthOfExpression);
 			expression = outputExpression;
 			lengthOfExpression = outputExpression.length();
-			System.out.println(
-					"Expression after reassignement is " + expression + " with length as " + lengthOfExpression);
+			//System.out.println("Expression after reassignement is " + expression + " with length as " + lengthOfExpression);
 			s = 0;
 			// }
 		}
@@ -168,9 +169,9 @@ public class CalculationEngineService {
 	public TreeMap<Integer, String> startCalculationEngine(int testCasesNum, String[] testCasesArr) {
 
 		TreeMap<Integer, String> outputMap = validateSuppliedExpression(testCasesNum, testCasesArr);
-		
+
 		TreeMap<Integer, String> resultMap = new TreeMap<Integer, String>();
-		
+
 		for (int orderOfInsertion : outputMap.keySet()) {
 			if (outputMap.get(orderOfInsertion).equals("Valid Expression")) {
 				String calculateExpression = testCasesArr[orderOfInsertion];
@@ -189,29 +190,34 @@ public class CalculationEngineService {
 	}
 
 	/**
-	 * Function to validate the provided expression as the scientific calculations standards set in the requirement document. 
-	 * @param testCasesNum - Number of test cases. 
-	 * @param testCasesArr - Arrays of input test cases supplied by user. 
-	 * @return A TreeMap consisting of validity check result maintained in the same insertion order as given by user.
+	 * Function to validate the provided expression as the scientific
+	 * calculations standards set in the requirement document.
+	 * 
+	 * @param testCasesNum
+	 *            - Number of test cases.
+	 * @param testCasesArr
+	 *            - Arrays of input test cases supplied by user.
+	 * @return A TreeMap consisting of validity check result maintained in the
+	 *         same insertion order as given by user.
 	 */
 	public TreeMap<Integer, String> validateSuppliedExpression(int testCasesNum, String[] testCasesArr) {
 		TreeMap<Integer, String> outputMap = new TreeMap<Integer, String>();
 		for (int i = 0; i < testCasesNum; i++) {
 			boolean validityFlag = true;
 			String expression = testCasesArr[i];
-			System.out.println("initial expression is " + expression);
+			//System.out.println("initial expression is " + expression);
 			int index = 0;
 			int openingBrackets = 0;
 			int closingBrackets = 0;
 			char[] expressionArr = expression.toCharArray();
 			int len = expressionArr.length;
 			for (char c : expressionArr) {
-				System.out.println("char is " + new Character(c));
-				System.out.println("index is " + index);
+				//System.out.println("char is " + new Character(c));
+				//System.out.println("index is " + index);
 				if (OPERAND_CHAR_LIST.contains(c) || c == '(' || c == ')') {
 					if (index != len - 1) {
 						char nextChar = expressionArr[index + 1];
-						System.out.println("next char in operand is " + new Character(nextChar));
+						//System.out.println("next char in operand is " + new Character(nextChar));
 						if (c == '(' & (nextChar != ')' || !OPERAND_CHAR_LIST.contains(nextChar))) {
 							openingBrackets++;
 						} else if (OPERAND_CHAR_LIST.contains(c)
@@ -238,7 +244,7 @@ public class CalculationEngineService {
 				} else if (NUMERICAL_CHAR_LIST.contains(c)) {
 					if (index != len - 1) {
 						char nextChar = expressionArr[index + 1];
-						System.out.println("next char in numerical is " + new Character(nextChar));
+						//System.out.println("next char in numerical is " + new Character(nextChar));
 						if (NUMERICAL_CHAR_LIST.contains(nextChar) || OPERAND_CHAR_LIST.contains(nextChar)
 								|| nextChar == ')') {
 

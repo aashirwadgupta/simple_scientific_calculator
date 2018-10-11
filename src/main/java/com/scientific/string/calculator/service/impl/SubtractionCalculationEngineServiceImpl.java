@@ -32,7 +32,7 @@ public class SubtractionCalculationEngineServiceImpl extends CalculationEngineSe
 			if (!(start == 0 && startChar == '(')) {
 				if (NUMERICAL_CHAR_LIST.contains(startChar) || startChar == '(' || startChar == ')') {
 					if (start == 0) {
-						System.out.println(start);
+						//System.out.println(start);
 						String extractedString = expression.substring(start, positionOfSubtract);
 						extractedString = extractedString.replace("(", "").replace(")", "");
 						startNum = Double.parseDouble(extractedString);
@@ -47,7 +47,7 @@ public class SubtractionCalculationEngineServiceImpl extends CalculationEngineSe
 					break;
 				}
 			} else {
-				System.out.println(start);
+				//System.out.println(start);
 				String extractedString = expression.substring(start, positionOfSubtract);
 				extractedString = extractedString.replace("(", "").replace(")", "");
 				startNum = Double.parseDouble(extractedString);
