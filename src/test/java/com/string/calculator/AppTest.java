@@ -1,4 +1,4 @@
-package string.calculator.scientific;
+package com.string.calculator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
