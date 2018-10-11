@@ -9,6 +9,7 @@ If it is foound that the expression doesn't match mathematical constraints, it i
 
 The code has been tested with the types of input as mentioned in testCases.txt file under the code directory. 
 
+This project currently handles most of the scenarios but still some improvements will be done for testing extreme boundary conditions and programatically complex expressions. 
 Many more test cases will be tested and code will be updated over the course of time, taking in account more of scientific calculation operands. 
 
 Currently the operands which are taken into consideration are 
