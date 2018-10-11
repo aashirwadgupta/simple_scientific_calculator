@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.string.calculator.service.CalculationEngine;
+import com.string.calculator.service.impl.AdditionCalculationEngineImpl;
+import com.string.calculator.service.impl.DivisionCalculationEngineImpl;
+import com.string.calculator.service.impl.MultiplicationCalculationEngineImpl;
+import com.string.calculator.service.impl.PowerCalculationEngineImpl;
+import com.string.calculator.service.impl.SubtractionCalculationEngineImpl;
+import com.sun.javafx.css.CalculatedValue;
+
 /**
  * Hello world!
  *
@@ -32,21 +40,27 @@ public class App
         	for(int i=0; i<testCases; i++) {
         		boolean validityFlag = true;
         		String expression = testCasesArr[i];
+        		System.out.println("initial expression is "+expression);
         		int index = 0;
         		int openingBrackets = 0;
         		int closingBrackets = 0;
         		char[] expressionArr = expression.toCharArray();
         		int len = expressionArr.length;
         		for(char c : expressionArr) {
-					System.out.println(new Character(c));
+					System.out.println("char is "+new Character(c));
+					System.out.println("index is "+index);
             		if(OPERAND_CHAR_LIST.contains(c) || c == '(' || c==')'){
             			if(index!=len-1){
             				char nextChar = expressionArr[index+1];
-        					System.out.println(new Character(nextChar));
+        					System.out.println("next char in operand is "+new Character(nextChar));
             				if(c=='(' & (nextChar!=')' || !OPERAND_CHAR_LIST.contains(nextChar))){
             					openingBrackets++;
-            				} else if(c==')' & (nextChar!='(' || !OPERAND_CHAR_LIST.contains(nextChar))) {
+            				} else if(OPERAND_CHAR_LIST.contains(c) && (nextChar!=')' || !OPERAND_CHAR_LIST.contains(nextChar))) {
+            					
+            				} else if(c==')' && nextChar!='(') {
             					closingBrackets++;
+            				} else if(c!=')' && nextChar=='(') {
+            					openingBrackets++;
             				} else if(!OPERAND_CHAR_LIST.contains(nextChar) && nextChar!=')') {
             					
             				} else {
@@ -66,7 +80,8 @@ public class App
             		} else if(NUMERICAL_CHAR_LIST.contains(c)) {
             			if(index!=len-1){
             				char nextChar = expressionArr[index+1];
-        					System.out.println(new Character(nextChar));
+        					System.out.println("next char in numerical is "+new Character(nextChar));
+        					//System.out.println(new Character(nextChar));
             				if(NUMERICAL_CHAR_LIST.contains(nextChar) || OPERAND_CHAR_LIST.contains(nextChar) || nextChar == ')'){
             					
             				} else {
@@ -80,71 +95,17 @@ public class App
             				break;
         				}
             			//System.out.println("Invalid Expression");
+            		} else {
+            			validityFlag = false;
+            			break;
             		}
             		index = index+1;
         		}
         		if(validityFlag && (openingBrackets == closingBrackets)) {
-        			int lengthOfExpression = expression.length();
-        			int position = 0;
-        			int positionOfPow = 0;
-        			int positionOfAdd = 0;
-        			int positionOfSubtract = 0;
-        			int positionOfMultiply = 0;
-        			int positionOfDivide = 0;
-        			int positionOfOpenBracket = 0;
-        			int positionOfClosedBracket = 0;
+        			System.out.println("Starting now in Valid expression");
         			outputMap.put(i, "Valid Expression");
-        			positionOfOpenBracket = expression.indexOf('(');
-        			int lastPositionOfOpenBracket = expression.lastIndexOf('(');
-        			for(int s = 0; s<lengthOfExpression; s++){
-        				if((s+1)==lengthOfExpression){
-        					break;
-        				}
-        				char presentChar = expression.charAt(s+1);
-        				if(NUMERICAL_CHAR_LIST.contains(presentChar)) {
-        					positionOfPow = expression.indexOf('^');
-        					positionOfDivide = expression.indexOf('/');
-        					positionOfMultiply = expression.indexOf('*');
-        					positionOfAdd = expression.indexOf('+');
-        					positionOfSubtract = expression.indexOf('-');
-        					
-        					String outputExpression = "";
-                			if(positionOfPow!=-1){
-                				outputExpression = calculatePower(expression, lengthOfExpression, positionOfPow);
-                    			System.out.println(outputExpression);
-                    			/*positionOfPow = outputExpression.indexOf('^');
-                				if(positionOfPow!=-1){
-                    				lengthOfExpression = outputExpression.length();
-                					outputExpression = calculatePower(expression, lengthOfExpression, positionOfPow);                				
-                    			} else {
-                    				positionOfDivide = outputExpression.indexOf('/');
-                    			}*/
-                			} else if(positionOfDivide!=-1) {
-                				outputExpression = calculateDivision(expression, lengthOfExpression, positionOfDivide);
-                    			System.out.println(outputExpression);                				
-                			} else if(positionOfMultiply!=-1){
-                				outputExpression = calculateMultiplication(expression, lengthOfExpression,
-										positionOfMultiply);
-                    			System.out.println(outputExpression);
-                			} else if(positionOfAdd!=-1) {
-                				outputExpression = calculateAddition(expression, lengthOfExpression, positionOfAdd);
-                    			System.out.println(outputExpression);
-                			} else if(!(positionOfSubtract==-1 || positionOfSubtract==0)){
-                				outputExpression = calculateSubtraction(expression, lengthOfExpression,
-										positionOfSubtract);
-                    			System.out.println(outputExpression);
-                			} else {
-                				outputExpression = expression;
-                				s=lengthOfExpression-1;
-                				break;
-                			}
-                			//System.out.println("Expression is "+expression+" with length as "+lengthOfExpression);
-                			expression = outputExpression;
-                			lengthOfExpression = outputExpression.length();
-                			//System.out.println("Expression after reassignement is "+expression+" with length as "+lengthOfExpression);
-                			s=0;
-            			}
-        			}
+        			CalculationEngine calculationEngine = new CalculationEngine();
+        			expression = calculationEngine.invokeCalculationEngine(expression);
         			System.out.println(expression);
         			
         			/*for(char c : expressionArr) {
@@ -181,6 +142,7 @@ public class App
         }
     }
 
+	
 	private static String calculateDivision(String expression, int lengthOfExpression, int positionOfDivide) {
 		String outputExpression;
 		double startNum = 0;
