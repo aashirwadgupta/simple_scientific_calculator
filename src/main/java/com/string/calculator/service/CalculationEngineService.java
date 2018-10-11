@@ -2,7 +2,7 @@ package com.string.calculator.service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
 import com.string.calculator.service.impl.AdditionCalculationEngineServiceImpl;
 import com.string.calculator.service.impl.DivisionCalculationEngineServiceImpl;
@@ -13,8 +13,7 @@ import com.string.calculator.service.impl.SubtractionCalculationEngineServiceImp
 public class CalculationEngineService {
 
 	public static final List<Character> OPERAND_CHAR_LIST = Arrays.asList('+', '-', '/', '*', '^');
-	public static final List<Character> NUMERICAL_CHAR_LIST = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8',
-			'9', '.');
+	public static final List<Character> NUMERICAL_CHAR_LIST = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.');
 
 	/**
 	 * Engine Function to perform operation on an Expression. BODMAS rule is
@@ -29,7 +28,8 @@ public class CalculationEngineService {
 	 * @param positionOfOperand
 	 *            first position of the operand.
 	 * @return the output expression post the calculation being done, replacing
-	 *         the multiple brackets enclosed
+	 *         the multiple brackets enclosed, with the output of the respective
+	 *         operation of the operand
 	 */
 	public String calculateOperandExpression(String expression, int lengthOfExpression, int positionOfOperand) {
 		return expression;
@@ -54,21 +54,21 @@ public class CalculationEngineService {
 
 		int lengthOfExpression = expression.length();
 		System.out.println("supplied expression is " + expression);
-		//int position = 0;
+		// int position = 0;
 		int positionOfPow = 0;
 		int positionOfAdd = 0;
 		int positionOfSubtract = 0;
 		int positionOfMultiply = 0;
 		int positionOfDivide = 0;
-		//int positionOfOpenBracket = 0;
-		//int positionOfClosedBracket = 0;
-		//positionOfOpenBracket = expression.indexOf('(');
-		//int lastPositionOfOpenBracket = expression.lastIndexOf('(');
+		// int positionOfOpenBracket = 0;
+		// int positionOfClosedBracket = 0;
+		// positionOfOpenBracket = expression.indexOf('(');
+		// int lastPositionOfOpenBracket = expression.lastIndexOf('(');
 		for (int s = 0; s < lengthOfExpression; s++) {
 			if ((s + 1) == lengthOfExpression) {
 				break;
 			}
-			//char presentChar = expression.charAt(s + 1);
+			// char presentChar = expression.charAt(s + 1);
 			// if(NUMERICAL_CHAR_LIST.contains(presentChar)) {
 			positionOfPow = expression.indexOf('^');
 			positionOfDivide = expression.indexOf('/');
@@ -159,8 +159,43 @@ public class CalculationEngineService {
 	 *            - The array of the read test cases provided by the user. This
 	 *            will contain expressions on which Validations and calculations
 	 *            (if Valid) have to be performed
+	 * @return an ordered TreeMap consisting of result of the expressions. Final
+	 *         outcome of calculation for an Expression which stands to be
+	 *         valid. 'Infinity' as the outcome for the expression which has a
+	 *         divide by zero. 'Invalid Expression' for the expression which
+	 *         doesn't stands to be valid as per the test cases.
 	 */
-	public void startCalculationEngine(int testCasesNum, Map<Integer, String> outputMap, String[] testCasesArr) {
+	public TreeMap<Integer, String> startCalculationEngine(int testCasesNum, String[] testCasesArr) {
+
+		TreeMap<Integer, String> outputMap = validateSuppliedExpression(testCasesNum, testCasesArr);
+		
+		TreeMap<Integer, String> resultMap = new TreeMap<Integer, String>();
+		
+		for (int orderOfInsertion : outputMap.keySet()) {
+			if (outputMap.get(orderOfInsertion).equals("Valid Expression")) {
+				String calculateExpression = testCasesArr[orderOfInsertion];
+				if (calculateExpression.contains("/0")) {
+					resultMap.put(orderOfInsertion, "Infinity");
+				} else {
+					CalculationEngineService calculationEngine = new CalculationEngineService();
+					String finalResult = calculationEngine.invokeCalculationEngine(calculateExpression);
+					resultMap.put(orderOfInsertion, finalResult);
+				}
+			} else {
+				resultMap.put(orderOfInsertion, "Invalid Expression");
+			}
+		}
+		return resultMap;
+	}
+
+	/**
+	 * Function to validate the provided expression as the scientific calculations standards set in the requirement document. 
+	 * @param testCasesNum - Number of test cases. 
+	 * @param testCasesArr - Arrays of input test cases supplied by user. 
+	 * @return A TreeMap consisting of validity check result maintained in the same insertion order as given by user.
+	 */
+	public TreeMap<Integer, String> validateSuppliedExpression(int testCasesNum, String[] testCasesArr) {
+		TreeMap<Integer, String> outputMap = new TreeMap<Integer, String>();
 		for (int i = 0; i < testCasesNum; i++) {
 			boolean validityFlag = true;
 			String expression = testCasesArr[i];
@@ -190,7 +225,6 @@ public class CalculationEngineService {
 
 						} else {
 							validityFlag = false;
-							// System.out.println("Invalid Expression");
 							break;
 						}
 					} else {
@@ -198,7 +232,6 @@ public class CalculationEngineService {
 							closingBrackets++;
 						} else if (c == '(' || OPERAND_CHAR_LIST.contains(c)) {
 							validityFlag = false;
-							// System.out.println("Invalid Expression");
 							break;
 						}
 					}
@@ -206,21 +239,17 @@ public class CalculationEngineService {
 					if (index != len - 1) {
 						char nextChar = expressionArr[index + 1];
 						System.out.println("next char in numerical is " + new Character(nextChar));
-						// System.out.println(new Character(nextChar));
 						if (NUMERICAL_CHAR_LIST.contains(nextChar) || OPERAND_CHAR_LIST.contains(nextChar)
 								|| nextChar == ')') {
 
 						} else {
 							validityFlag = false;
-							// System.out.println("Invalid Expression");
 							break;
 						}
 					} else if (c == '(' && OPERAND_CHAR_LIST.contains(c)) {
 						validityFlag = false;
-						// System.out.println("Invalid Expression");
 						break;
 					}
-					// System.out.println("Invalid Expression");
 				} else {
 					validityFlag = false;
 					break;
@@ -228,17 +257,12 @@ public class CalculationEngineService {
 				index = index + 1;
 			}
 			if (validityFlag && (openingBrackets == closingBrackets)) {
-				// System.out.println("Starting now in Valid expression");
 				outputMap.put(i, "Valid Expression");
-				CalculationEngineService calculationEngine = new CalculationEngineService();
-				expression = calculationEngine.invokeCalculationEngine(expression);
-				// System.out.println(expression);
-				outputMap.put(i, expression);
 			} else {
 				outputMap.put(i, "Invalid Expression");
 			}
-
 		}
+		return outputMap;
 	}
 
 }
