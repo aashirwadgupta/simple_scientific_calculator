@@ -1,4 +1,4 @@
-package com.string.calculator.service;
+package com.scientific.string.calculator.service;
 
 /*import com.string.calculator.service.impl.AdditionCalculationEngineImpl;
 import com.string.calculator.service.impl.DivisionCalculationEngineImpl;

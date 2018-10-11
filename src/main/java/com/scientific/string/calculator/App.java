@@ -1,11 +1,11 @@
-package com.string.calculator;
+package com.scientific.string.calculator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.TreeMap;
 
-import com.string.calculator.service.CalculationEngineService;
+import com.scientific.string.calculator.service.CalculationEngineService;
 
 public class App 
 {

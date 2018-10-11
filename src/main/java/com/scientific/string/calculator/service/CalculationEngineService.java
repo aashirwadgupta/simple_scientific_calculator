@@ -1,14 +1,14 @@
-package com.string.calculator.service;
+package com.scientific.string.calculator.service;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
-import com.string.calculator.service.impl.AdditionCalculationEngineServiceImpl;
-import com.string.calculator.service.impl.DivisionCalculationEngineServiceImpl;
-import com.string.calculator.service.impl.MultiplicationCalculationEngineServiceImpl;
-import com.string.calculator.service.impl.PowerCalculationEngineServiceImpl;
-import com.string.calculator.service.impl.SubtractionCalculationEngineServiceImpl;
+import com.scientific.string.calculator.service.impl.AdditionCalculationEngineServiceImpl;
+import com.scientific.string.calculator.service.impl.DivisionCalculationEngineServiceImpl;
+import com.scientific.string.calculator.service.impl.MultiplicationCalculationEngineServiceImpl;
+import com.scientific.string.calculator.service.impl.PowerCalculationEngineServiceImpl;
+import com.scientific.string.calculator.service.impl.SubtractionCalculationEngineServiceImpl;
 
 public class CalculationEngineService {
 

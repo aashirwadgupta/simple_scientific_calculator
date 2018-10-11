@@ -1,8 +1,8 @@
-package com.string.calculator.service.impl;
+package com.scientific.string.calculator.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.string.calculator.service.CalculationEngineService;
+import com.scientific.string.calculator.service.CalculationEngineService;
 
 public class PowerCalculationEngineServiceImpl extends CalculationEngineService {
 	

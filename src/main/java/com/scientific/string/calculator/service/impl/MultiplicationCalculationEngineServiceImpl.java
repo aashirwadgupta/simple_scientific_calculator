@@ -1,6 +1,6 @@
-package com.string.calculator.service.impl;
+package com.scientific.string.calculator.service.impl;
 
-import com.string.calculator.service.CalculationEngineService;
+import com.scientific.string.calculator.service.CalculationEngineService;
 
 public class MultiplicationCalculationEngineServiceImpl extends CalculationEngineService {
 
