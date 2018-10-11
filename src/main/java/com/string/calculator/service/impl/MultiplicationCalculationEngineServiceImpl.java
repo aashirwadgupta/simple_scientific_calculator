@@ -1,9 +1,27 @@
 package com.string.calculator.service.impl;
 
-import com.string.calculator.service.CalculationEngine;
+import com.string.calculator.service.CalculationEngineService;
 
-public class MultiplicationCalculationEngineImpl extends CalculationEngine {
+public class MultiplicationCalculationEngineServiceImpl extends CalculationEngineService {
 
+	/**
+	 * Multiplication Engine Function to perform multiplication in the expression at
+	 * places wherever the '*' sign occurs. This function overrides base
+	 * function of the {@com.string.calculator.service.CalculationEngine} Class
+	 * which uses BODMAS rule to solve the expression equation
+	 * 
+	 * @param expression
+	 *            The expression in which the multiplication between digits is to
+	 *            be performed
+	 * @param lengthOfExpression
+	 *            length of the provided expression.
+	 * @param positionOfMultiply
+	 *            first position of the '*' sign, in the expression to be
+	 *            calculated.
+	 * @return the output expression post the calculation being done, replacing
+	 *         the multiple brackets enclosed, with the result of the expression
+	 *         on which multiplication was performed.
+	 */
 	public String calculateOperandExpression(String expression, int lengthOfExpression, int positionOfMultiply) {
 		String outputExpression;
 		double startNum = 0;

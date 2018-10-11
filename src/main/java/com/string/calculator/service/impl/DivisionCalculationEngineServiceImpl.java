@@ -1,9 +1,27 @@
 package com.string.calculator.service.impl;
 
-import com.string.calculator.service.CalculationEngine;
+import com.string.calculator.service.CalculationEngineService;
 
-public class DivisionCalculationEngineImpl extends CalculationEngine {
+public class DivisionCalculationEngineServiceImpl extends CalculationEngineService {
 	
+	/**
+	 * Division Engine Function to perform division in the expression at
+	 * places wherever the '/' sign occurs. This function overrides base
+	 * function of the {@com.string.calculator.service.CalculationEngine} Class
+	 * which uses BODMAS rule to solve the expression equation
+	 * 
+	 * @param expression
+	 *            The expression in which the division between digits is to
+	 *            be performed
+	 * @param lengthOfExpression
+	 *            length of the provided expression.
+	 * @param positionOfDivide
+	 *            first position of the '/' sign, in the expression to be
+	 *            calculated.
+	 * @return the output expression post the calculation being done, replacing
+	 *         the multiple brackets enclosed, with the result of the expression
+	 *         on which division was performed.
+	 */
 	public String calculateOperandExpression(String expression, int lengthOfExpression, int positionOfDivide) {
 		String outputExpression;
 		double startNum = 0;
@@ -34,15 +52,7 @@ public class DivisionCalculationEngineImpl extends CalculationEngine {
 				startChip = start;
 				break;
 			}
-			/*if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
-				
-			} else {
-				String extractedString = expression.substring(start+1, positionOfDivide);
-				extractedString.replace("(", "").replace(")", "");
-				startNum = Double.parseDouble(extractedString);
-				startChip = start+1;
-				break;
-			}*/
+			
 		}
 		for(int end = positionOfDivide+1;end<lengthOfExpression;end++){
 			char endChar = expression.charAt(end);
@@ -69,15 +79,6 @@ public class DivisionCalculationEngineImpl extends CalculationEngine {
 				endChip = end+1;
 				
 			}
-			/*if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
-				
-			} else {
-				String extractedString = expression.substring(positionOfDivide+1, end);
-				extractedString.replace("(", "").replace(")", "");
-				endNum = Double.parseDouble(extractedString);
-				endChip = end;
-				break;
-			}*/
 		}
 		double divideOutput = startNum/endNum;
 		divideOutput = Math.round(divideOutput*100.0)/100.0;

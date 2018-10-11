@@ -3,30 +3,21 @@ package com.string.calculator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
+/*import java.util.Arrays;
+import java.util.List;*/
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.string.calculator.service.CalculationEngine;
-import com.string.calculator.service.impl.AdditionCalculationEngineImpl;
-import com.string.calculator.service.impl.DivisionCalculationEngineImpl;
-import com.string.calculator.service.impl.MultiplicationCalculationEngineImpl;
-import com.string.calculator.service.impl.PowerCalculationEngineImpl;
-import com.string.calculator.service.impl.SubtractionCalculationEngineImpl;
-import com.sun.javafx.css.CalculatedValue;
+import com.string.calculator.service.CalculationEngineService;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
-	private static final List<Character> OPERAND_CHAR_LIST = Arrays.asList('+','-','/','*','^');
-	private static final List<Character> NUMERICAL_CHAR_LIST = Arrays.asList('0','1','2','3','4','5','6','7','8','9','.');
+	//Commented as not being used now.
+	//private static final List<Character> OPERAND_CHAR_LIST = Arrays.asList('+','-','/','*','^');
+	//private static final List<Character> NUMERICAL_CHAR_LIST = Arrays.asList('0','1','2','3','4','5','6','7','8','9','.');
+	
     public static void main( String[] args )
     {
-        //System.out.println( "Welcome to Scientifc String Calculator" );
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
         int testCases = 0;
         Map<Integer, String> outputMap = new TreeMap<Integer, String>();
@@ -37,101 +28,8 @@ public class App
         		testCasesArr[i] = inputReader.readLine();
         	}
         	System.out.println("Validating and calculating Result");
-        	for(int i=0; i<testCases; i++) {
-        		boolean validityFlag = true;
-        		String expression = testCasesArr[i];
-        		System.out.println("initial expression is "+expression);
-        		int index = 0;
-        		int openingBrackets = 0;
-        		int closingBrackets = 0;
-        		char[] expressionArr = expression.toCharArray();
-        		int len = expressionArr.length;
-        		for(char c : expressionArr) {
-					System.out.println("char is "+new Character(c));
-					System.out.println("index is "+index);
-            		if(OPERAND_CHAR_LIST.contains(c) || c == '(' || c==')'){
-            			if(index!=len-1){
-            				char nextChar = expressionArr[index+1];
-        					System.out.println("next char in operand is "+new Character(nextChar));
-            				if(c=='(' & (nextChar!=')' || !OPERAND_CHAR_LIST.contains(nextChar))){
-            					openingBrackets++;
-            				} else if(OPERAND_CHAR_LIST.contains(c) && (nextChar!=')' || !OPERAND_CHAR_LIST.contains(nextChar))) {
-            					
-            				} else if(c==')' && nextChar!='(') {
-            					closingBrackets++;
-            				} else if(c!=')' && nextChar=='(') {
-            					openingBrackets++;
-            				} else if(!OPERAND_CHAR_LIST.contains(nextChar) && nextChar!=')') {
-            					
-            				} else {
-            					validityFlag = false;
-                				//System.out.println("Invalid Expression");
-                				break;
-            				}
-            			} else {
-            				if(c==')'){
-            					closingBrackets++;
-            				} else if (c=='(' || OPERAND_CHAR_LIST.contains(c)){
-            					validityFlag = false;
-                				//System.out.println("Invalid Expression");
-                				break;
-            				}
-            			}
-            		} else if(NUMERICAL_CHAR_LIST.contains(c)) {
-            			if(index!=len-1){
-            				char nextChar = expressionArr[index+1];
-        					System.out.println("next char in numerical is "+new Character(nextChar));
-        					//System.out.println(new Character(nextChar));
-            				if(NUMERICAL_CHAR_LIST.contains(nextChar) || OPERAND_CHAR_LIST.contains(nextChar) || nextChar == ')'){
-            					
-            				} else {
-            					validityFlag = false;
-                				//System.out.println("Invalid Expression");
-                				break;
-            				}
-            			} else if (c=='(' && OPERAND_CHAR_LIST.contains(c)){
-        					validityFlag = false;
-            				//System.out.println("Invalid Expression");
-            				break;
-        				}
-            			//System.out.println("Invalid Expression");
-            		} else {
-            			validityFlag = false;
-            			break;
-            		}
-            		index = index+1;
-        		}
-        		if(validityFlag && (openingBrackets == closingBrackets)) {
-        			System.out.println("Starting now in Valid expression");
-        			outputMap.put(i, "Valid Expression");
-        			CalculationEngine calculationEngine = new CalculationEngine();
-        			expression = calculationEngine.invokeCalculationEngine(expression);
-        			System.out.println(expression);
-        			
-        			/*for(char c : expressionArr) {
-        				System.out.println(new Character(c));
-        				if(position==0){
-        					if(numericalCharList.contains(c)){
-        						
-        					} else if(c=='(') {
-        					}
-        				} else if(c=='^'){
-        					
-        				} else if(c == '/'){
-        					
-        				} else if(c == '*'){
-        					
-        				} else if(c == '+'){
-        					
-        				} else if(c == '-'){
-        					
-        				}
-        			}*/
-        		} else {
-        			outputMap.put(i, "Invalid Expression");
-        		}
-        		
-        	}
+        	CalculationEngineService calculationEngine = new CalculationEngineService();
+        	calculationEngine.startCalculationEngine(testCases, outputMap, testCasesArr);
         	for(int k=0; k<outputMap.size(); k++) {
         		System.out.println(testCasesArr[k]+" is "+outputMap.get(k));
         	}
@@ -141,8 +39,87 @@ public class App
         	e.printStackTrace();
         }
     }
+    
+	/*private static void startCalculationEngine(int testCases, Map<Integer, String> outputMap, String[] testCasesArr) {
+		for(int i=0; i<testCases; i++) {
+			boolean validityFlag = true;
+			String expression = testCasesArr[i];
+			System.out.println("initial expression is "+expression);
+			int index = 0;
+			int openingBrackets = 0;
+			int closingBrackets = 0;
+			char[] expressionArr = expression.toCharArray();
+			int len = expressionArr.length;
+			for(char c : expressionArr) {
+				System.out.println("char is "+new Character(c));
+				System.out.println("index is "+index);
+				if(OPERAND_CHAR_LIST.contains(c) || c == '(' || c==')'){
+					if(index!=len-1){
+						char nextChar = expressionArr[index+1];
+						System.out.println("next char in operand is "+new Character(nextChar));
+						if(c=='(' & (nextChar!=')' || !OPERAND_CHAR_LIST.contains(nextChar))){
+							openingBrackets++;
+						} else if(OPERAND_CHAR_LIST.contains(c) && (nextChar!=')' || !OPERAND_CHAR_LIST.contains(nextChar))) {
+							
+						} else if(c==')' && nextChar!='(') {
+							closingBrackets++;
+						} else if(c!=')' && nextChar=='(') {
+							openingBrackets++;
+						} else if(!OPERAND_CHAR_LIST.contains(nextChar) && nextChar!=')') {
+							
+						} else {
+							validityFlag = false;
+		    				//System.out.println("Invalid Expression");
+		    				break;
+						}
+					} else {
+						if(c==')'){
+							closingBrackets++;
+						} else if (c=='(' || OPERAND_CHAR_LIST.contains(c)){
+							validityFlag = false;
+		    				//System.out.println("Invalid Expression");
+		    				break;
+						}
+					}
+				} else if(NUMERICAL_CHAR_LIST.contains(c)) {
+					if(index!=len-1){
+						char nextChar = expressionArr[index+1];
+						System.out.println("next char in numerical is "+new Character(nextChar));
+						//System.out.println(new Character(nextChar));
+						if(NUMERICAL_CHAR_LIST.contains(nextChar) || OPERAND_CHAR_LIST.contains(nextChar) || nextChar == ')'){
+							
+						} else {
+							validityFlag = false;
+		    				//System.out.println("Invalid Expression");
+		    				break;
+						}
+					} else if (c=='(' && OPERAND_CHAR_LIST.contains(c)){
+						validityFlag = false;
+						//System.out.println("Invalid Expression");
+						break;
+					}
+					//System.out.println("Invalid Expression");
+				} else {
+					validityFlag = false;
+					break;
+				}
+				index = index+1;
+			}
+			if(validityFlag && (openingBrackets == closingBrackets)) {
+				//System.out.println("Starting now in Valid expression");
+				outputMap.put(i, "Valid Expression");
+				CalculationEngine calculationEngine = new CalculationEngine();
+				expression = calculationEngine.invokeCalculationEngine(expression);
+				//System.out.println(expression);
+				outputMap.put(i, expression);
+			} else {
+				outputMap.put(i, "Invalid Expression");
+			}
+			
+		}
+	}*/
 
-	
+/*	
 	private static String calculateDivision(String expression, int lengthOfExpression, int positionOfDivide) {
 		String outputExpression;
 		double startNum = 0;
@@ -173,7 +150,7 @@ public class App
 				startChip = start;
 				break;
 			}
-			/*if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
+			if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
 				
 			} else {
 				String extractedString = expression.substring(start+1, positionOfDivide);
@@ -181,7 +158,7 @@ public class App
 				startNum = Double.parseDouble(extractedString);
 				startChip = start+1;
 				break;
-			}*/
+			}
 		}
 		for(int end = positionOfDivide+1;end<lengthOfExpression;end++){
 			char endChar = expression.charAt(end);
@@ -208,7 +185,7 @@ public class App
 				endChip = end+1;
 				
 			}
-			/*if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
+			if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
 				
 			} else {
 				String extractedString = expression.substring(positionOfDivide+1, end);
@@ -216,7 +193,7 @@ public class App
 				endNum = Double.parseDouble(extractedString);
 				endChip = end;
 				break;
-			}*/
+			}
 		}
 		double divideOutput = startNum/endNum;
 		divideOutput = Math.round(divideOutput*100.0)/100.0;
@@ -254,7 +231,7 @@ public class App
 				startChip = start;
 				break;
 			}
-			/*if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
+			if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
 				
 			} else {
 				String extractedString = expression.substring(start+1, positionOfMultiply);
@@ -262,7 +239,7 @@ public class App
 				startNum = Double.parseDouble(extractedString);
 				startChip = start+1;
 				break;
-			}*/
+			}
 		}
 		for(int end = positionOfMultiply+1;end<lengthOfExpression;end++){
 			char endChar = expression.charAt(end);
@@ -324,7 +301,7 @@ public class App
 				startChip = start;
 				break;
 			}
-			/*if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
+			if(numericalCharList.contains(startChar) || startChar == '(' || startChar == ')'){
 				
 			} else {
 				String extractedString = expression.substring(start+1, positionOfAdd);
@@ -332,7 +309,7 @@ public class App
 				startNum = Double.parseDouble(extractedString);
 				startChip = start+1;
 				break;
-			}*/
+			}
 		}
 		for(int end = positionOfAdd+1;end<lengthOfExpression;end++){
 			char endChar = expression.charAt(end);
@@ -357,7 +334,7 @@ public class App
 				endNum = Double.parseDouble(extractedString);
 				endChip = end+1;
 			}
-			/*if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
+			if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
 				
 			} else {
 				String extractedString = expression.substring(positionOfAdd+1, end);
@@ -365,7 +342,7 @@ public class App
 				endNum = Double.parseDouble(extractedString);
 				endChip = end;
 				break;
-			}*/
+			}
 		}
 		double addOutput = startNum+endNum;
 		addOutput = Math.round(addOutput*100.0)/100.0;
@@ -429,7 +406,7 @@ public class App
 				endNum = Double.parseDouble(extractedString);
 				endChip = end+1;
 			}
-			/*if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
+			if(numericalCharList.contains(endChar) || endChar == '(' || endChar == ')'){
 				
 			} else {
 				String extractedString = expression.substring(positionOfSubtract+1, end);
@@ -437,7 +414,7 @@ public class App
 				endNum = Double.parseDouble(extractedString);
 				endChip = end;
 				break;
-			}*/
+			}
 		}
 		double subtractOutput = startNum-endNum;
 		subtractOutput = Math.round(subtractOutput*100.0)/100.0;
@@ -502,18 +479,18 @@ public class App
 				endNum = Double.parseDouble(extractedString);
 				endChip = end+1;
 			}
-			/*if(numericalCharList.contains(expression.charAt(end))){
+			if(numericalCharList.contains(expression.charAt(end))){
 				
 			} else {
 				endNum = Double.parseDouble(expression.substring(positionOfPow+1, end));
 				endChip = end;
 				break;
-			}*/
+			}
 		}
 		double powerOutput = Math.pow(startNum, endNum);
 		powerOutput = Math.round(powerOutput*100.0)/100.0;
 		String outputExpression = expression.substring(0, startChip)+powerOutput+expression.substring(endChip, lengthOfExpression);
 		return outputExpression;
 	}
-	
+	*/
 }

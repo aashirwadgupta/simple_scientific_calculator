@@ -2,10 +2,28 @@ package com.string.calculator.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.string.calculator.service.CalculationEngine;
+import com.string.calculator.service.CalculationEngineService;
 
-public class PowerCalculationEngineImpl extends CalculationEngine {
+public class PowerCalculationEngineServiceImpl extends CalculationEngineService {
 	
+	/**
+	 * Exponential/Power Engine Function to perform exponent/power in the expression at
+	 * places wherever the '^' sign occurs. This function overrides base
+	 * function of the {@com.string.calculator.service.CalculationEngine} Class
+	 * which uses BODMAS rule to solve the expression equation
+	 * 
+	 * @param expression
+	 *            The expression in which the division between digits is to
+	 *            be performed
+	 * @param lengthOfExpression
+	 *            length of the provided expression.
+	 * @param positionOfDivide
+	 *            first position of the '^' sign, in the expression to be
+	 *            calculated.
+	 * @return the output expression post the calculation being done, replacing
+	 *         the multiple brackets enclosed, with the result of the expression
+	 *         on which exponent/power was performed.
+	 */
 	public String calculateOperandExpression(String expression, int lengthOfExpression, int positionOfPow) {
 		System.out.println("Expression within power is "+expression);
 		double startNum = 0;
